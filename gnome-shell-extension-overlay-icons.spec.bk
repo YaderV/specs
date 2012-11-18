@@ -1,0 +1,49 @@
+%global git 4f76c30 
+%global uuid windowoverlay-icons@sustmidown.centrum.cz
+%global github vdepizzol
+
+Name:			gnome-shell-extension-overlay-icons
+Version:		3.0
+Release:		1%{?dist}
+Summary:		Easily discover which application to select by viewing the app icons in the windows overview.
+
+Group:			User Interface/Desktops
+License:		GPLv3+
+URL:			https://github.com/vdepizzol/gnome-shell-extension-overlay-icons
+Source0:		https://github.com/vdepizzol/gnome-shell-extension-overlay-icons/tarball/master/%{github}-%{name}-gnome-shell-%{version}-6-g%{git}.tar.gz
+BuildArch:		noarch
+
+Requires:		gnome-shell
+
+%description
+This extension allow to view the icons over the application in the windows overview.
+Useful to avoid confusion with the windows when you have a lot of them open on the
+same desktop.
+
+%prep
+%setup -q -n %{github}-%{name}-%{git}
+
+
+%build
+# Nothing to build
+
+
+%install
+rm -rf %{buildroot}
+mkdir -p %{buildroot}%{_datadir}/gnome-shell/extensions/%{uuid}
+install -Dp -m 0644 windowoverlay-icons/{extension.js,metadata.json,stylesheet.css} \
+  %{buildroot}%{_datadir}/gnome-shell/extensions/%{uuid}/
+
+
+%clean
+rm -rf %{buildroot}
+
+
+%files
+%defattr(-,root,root,-)
+%doc README
+%{_datadir}/gnome-shell/extensions/%{uuid}/
+
+%changelog
+* Sat Dec 17 2011 Yader Velasquez <yaderv@fedoraproject.org> - 0.3-1
+- First pkg
